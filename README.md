@@ -1,54 +1,77 @@
-# 🩺 Medical Chatbot  
-A simple and effective medical chatbot powered by Hugging Face Transformers, LangChain, Faiss, and Streamlit. This project demonstrates how to build an AI-powered assistant that can answer health-related queries based on uploaded documents.
+# 🧠 Medical Chatbot  
+A smart AI-powered Medical Chatbot that can read, understand, and respond to user queries using uploaded medical documents. Built using LLMs, vector databases, and streaming interfaces, this project simulates how AI can support basic healthcare communication by acting as a domain-aware assistant.
 
-### 🚀 Features  
-🔎 Document Search with Embeddings — Uses Hugging Face embeddings + Faiss for fast, relevant retrieval.
+### 📌 Project Idea  
+The goal is to build a domain-specific chatbot capable of:  
+Reading medical PDFs (like clinical guidelines or disease documentation)  
+Storing and understanding context using text embeddings  
+Answering user questions based on the uploaded content  
+Providing a simple, secure, and interactive interface  
 
-💬 Conversational Chatbot — Powered by a local LLM (e.g., Mistral), integrated via LangChain.
+This can be applied in:  
+Hospitals (for answering repetitive queries)  
+Medical education (student Q&A)  
+Patient self-help tools  
+This is an educational tool and not a replacement for licensed medical professionals.  
 
-📄 PDF Support — Upload and embed your own medical documents or datasets.
+### 🔧 Technical Implementation  
+Architecture Overview  
 
-🌐 Web Interface — Built with Streamlit for an interactive chat experience.
+User ⟶ Streamlit Chat UI
+          ⬇
+     LangChain + LLM (Mistral)
+          ⬇
+     Faiss Vector Store
+          ⬇
+   Embedded PDF Documents (via HuggingFace)
 
-### 📁 Project Structure  
+### 🛠️ Tech Stack  
+| Component          | Tool/Library             | Purpose                                 |
+| ------------------ | ------------------------ | --------------------------------------- |
+| Language Model     | Mistral (via LangChain)  | Generates intelligent responses         |
+| Embedding Model    | HuggingFace Transformers | Converts text to numeric vectors        |
+| Vector Store       | Faiss                    | Enables fast similarity search          |
+| File Parsing       | PyPDF                    | Extracts raw text from uploaded PDFs    |
+| Frontend Interface | Streamlit                | Provides user-friendly web interface    |
+| Orchestration      | LangChain                | Chains memory, embedding, and LLM logic |
+
+
+### 📂 Project Structure  
+
 medical-chatbot/
-│
-├── data/                        # Folder to store your medical PDFs or documents
-├── vectorstore/db_faiss/       # Stores generated vector embeddings
-├── create_memory_for_llm.py    # Embeds data into the vector database
-├── connect_memory_with_llm.py  # Connects vector store to the chatbot
-├── medibot.py                  # Main Streamlit chatbot interface
-├── medical-chatbot-ppt.pdf     # Presentation overview (architecture, flow)
-├── Pipfile / Pipfile.lock      # Pipenv environment and dependencies
-└── requirements.txt            # Python dependencies (alt to Pipfile)
+├── data/                         # PDF documents go here
+├── vectorstore/db_faiss/        # Preprocessed and indexed embeddings
+├── medibot.py                   # Streamlit app to run the chatbot
+├── create_memory_for_llm.py     # Script to build the vector index
+├── connect_memory_with_llm.py   # Binds memory with chatbot
+├── Pipfile / requirements.txt   # Project dependencies
+└── medical-chatbot-ppt.pdf      # Project explanation slides
 
-### 🛠️ Installation  
-✅ Python 3.8+ required  
-✅ Recommended: Use a virtual environment (Pipenv or venv)  
 
-Using Pipenv:  
-```git clone https://github.com/kalviumcommunity/Mannat_AI_Medical_Chatbot.git```  
-```cd Mannat_AI-Medical_Chatbot```  
+### ⚡ Efficiency  
+Embedding and search use optimized CPU-based Faiss.  
+Only top relevant documents are passed to the LLM, reducing inference cost.  
+Runs locally with minimal hardware (can be adapted for GPUs or APIs).  
 
-#### Install dependencies  
-pipenv install  
+### 🌐 Scalability  
 
-#### OR install specific packages manually  
-```pipenv install langchain langchain_community langchain_huggingface faiss-cpu pypdf huggingface_hub streamlit```  
+The modular architecture supports:  
+Adding more documents or domains  
+Switching to cloud-based LLMs or Faiss on GPU  
+Expanding the frontend with file uploads, login, etc.  
+Vector search scales well for thousands of documents without major performance loss.  
 
-#### How to Use  
-Add Documents  
-Place your medical PDFs inside the data/ folder.  
+### How to Run  
+Install dependencies:  
+```pipenv install```
 
-Generate Embeddings  
-Run the script to create a vector store from the PDFs:  
-```pipenv run python create_memory_for_llm.py```  
+Add documents to /data.  
 
-Run the Chatbot  
-Launch the Streamlit interface:  
-```pipenv run streamlit run medibot.py```  
+Generate memory:  
+```pipenv run python create_memory_for_llm.py```
 
-### Use Cases  
-Personal AI health assistant (non-clinical)  
-FAQ bot for hospitals or clinics  
-Medical student learning companion  
+Start the chatbot:  
+```pipenv run streamlit run medibot.py```
+
+### License
+This project is open for learning purposes. Do not use for actual medical diagnosis or emergency services.  
